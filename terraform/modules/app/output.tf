@@ -15,3 +15,7 @@ output "app_proxy_name_ip" {
     app_proxy.name => app_proxy.network_interface.0.nat_ip_address
   }
 }
+
+output "lb_ip" {
+  value = yandex_lb_network_load_balancer.app_lb.listener[*].external_address_spec.*.address
+}
