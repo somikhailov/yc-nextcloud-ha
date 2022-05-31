@@ -13,3 +13,13 @@ variable "ssh_key" {
 variable "dns_zone" {
   type = string
 }
+
+variable "app_count" {
+  description = "count app instances"
+  type        = number
+}
+
+variable "app_proxy_count" {
+  description = "count app_proxy instances"
+  type        = number
+}

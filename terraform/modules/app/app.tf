@@ -1,5 +1,6 @@
-resource "yandex_compute_instance" "vm" {
-  name        = "app"
+resource "yandex_compute_instance" "app" {
+  count       = var.app_count
+  name        = "app-${count.index}"
   platform_id = "standard-v1"
   zone        = var.yc_zone
 
@@ -33,7 +34,7 @@ resource "yandex_compute_instance" "vm" {
 
   provisioner "remote-exec" {
     inline = [
-      "echo 'instance up'",
+      "echo 'app-${count.index} up'",
     ]
   }
 }

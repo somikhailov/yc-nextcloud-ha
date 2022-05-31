@@ -5,4 +5,4 @@
   vars:
     domain_name: nextcloud.somikhailov.fun
   roles:
-    - nginx
+    - nextcloud

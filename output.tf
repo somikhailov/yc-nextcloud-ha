@@ -1,3 +1,7 @@
-output "name_ip" {
-  value = module.yc-instance.name_ip
+output "app_name_ip" {
+  value = module.yc-instance.app_name_ip
+}
+
+output "app_proxy_name_ip" {
+  value = module.yc-instance.app_proxy_name_ip
 }

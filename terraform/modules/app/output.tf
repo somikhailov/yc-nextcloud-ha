@@ -1,9 +1,17 @@
 output "internal_ip_address_vm" {
-  value = yandex_compute_instance.vm.network_interface.0.ip_address
+  value = yandex_compute_instance.app[0].network_interface.0.ip_address
 }
 
-output "name_ip" {
+output "app_name_ip" {
   value = {
-    "${yandex_compute_instance.vm.name}" = "${yandex_compute_instance.vm.network_interface.0.nat_ip_address}"
+    for app in yandex_compute_instance.app :
+    app.name => app.network_interface.0.nat_ip_address
+  }
+}
+
+output "app_proxy_name_ip" {
+  value = {
+    for app_proxy in yandex_compute_instance.app_proxy :
+    app_proxy.name => app_proxy.network_interface.0.nat_ip_address
   }
 }
