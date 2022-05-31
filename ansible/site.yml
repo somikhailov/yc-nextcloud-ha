@@ -6,3 +6,12 @@
     domain_name: nextcloud.somikhailov.fun
   roles:
     - nextcloud
+  tags: nextcloud
+
+- name: nginx
+  hosts: app_proxy
+  become: true
+    
+  roles:
+    - nginx
+  tags: nginx
