@@ -17,6 +17,11 @@ copy example and set your variables
 cp terraform.tfvars.example terraform.tfvars
 ```
 
+copy letsencrypt cert
+```
+./some/apth ./ansible/roles/nginx/files
+```
+
 for running 
 ```bash
 terraform init
