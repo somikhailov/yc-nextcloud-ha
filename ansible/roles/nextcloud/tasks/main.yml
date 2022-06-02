@@ -1,11 +1,5 @@
 ---
 # tasks file for ansible/roles/nginx_install
-- name: rsync letsencrypt cert
-  synchronize:
-    src: letsencrypt
-    dest: /etc/
-    use_ssh_args: yes
-
 - name: create dicrectories
   file:
     path: "{{ item }}"
@@ -26,7 +20,6 @@
     mode: 0755
   loop:
     - {src: nginx.conf.d/nextcloud.conf.j2, dest: nextcloud/nginx.conf.d/nextcloud.conf}
-    - {src: nginx.conf.d/certbot.conf.j2, dest: nextcloud/nginx.conf.d/certbot.conf}
     - {src: docker-compose.yml, dest: nextcloud/docker-compose.yml}
     - {src: db.env, dest: nextcloud/db.env}
     - {src: nginx.conf, dest: nextcloud/nginx.conf}

@@ -1,5 +1,11 @@
 ---
 # tasks file for ansible/roles/nginx_install
+- name: rsync letsencrypt cert
+  synchronize:
+    src: letsencrypt
+    dest: /etc/
+    use_ssh_args: yes
+
 - name: create dicrectories
   file:
     path: "{{ item }}"
@@ -10,6 +16,7 @@
   loop:
     - nginx
     - nginx/html
+    - nginx/nginx.conf.d
 
 - name: copy configs
   template:
@@ -21,6 +28,8 @@
   loop:
     - {src: docker-compose.yml, dest: nginx/docker-compose.yml}
     - {src: html/index.html.j2, dest: nginx/html/index.html}
+    - {src: nginx.conf.d/certbot.conf.j2, dest: nginx/nginx.conf.d/certbot.conf}
+    - {src: nginx.conf.d/proxy.conf.j2, dest: nginx/nginx.conf.d/proxy.conf}
 
 - name: start docker-compose
   shell: "docker-compose -f nginx/docker-compose.yml up -d"

@@ -41,12 +41,9 @@ services:
       - nextcloud:/var/www/html:ro
       - ./nginx.conf.d:/etc/nginx/conf.d
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - /etc/letsencrypt:/etc/letsencrypt
-      - acme:/opt/www/acme
     depends_on:
       - app
 
 volumes:
   db:
   nextcloud:
-  acme:

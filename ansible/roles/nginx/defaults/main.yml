@@ -1,3 +1,6 @@
 ---
 # defaults file for ansible/roles/nginx_install
-domain_name: nextcloud.somikhailov.fun
+dns_name: "_"
+
+backend_servers: 
+  - localhost

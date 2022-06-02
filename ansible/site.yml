@@ -2,16 +2,17 @@
 - name: nginx
   hosts: app_proxy
   become: true
-    
+  vars:
+    domain_name: nextcloud.somikhailov.fun
+    backend_servers: "{{ groups['app'] | map('extract', hostvars, ['ansible_host']) }}"    
   roles:
     - nginx
   tags: nginx
 
-# - name: Nextcloud
-#   hosts: app
-#   become: true
-#   vars:
-#     domain_name: nextcloud.somikhailov.fun
-#   roles:
-#     - nextcloud
-#   tags: nextcloud
+- name: Nextcloud
+  hosts: app
+  become: true
+
+  roles:
+    - nextcloud
+  tags: nextcloud

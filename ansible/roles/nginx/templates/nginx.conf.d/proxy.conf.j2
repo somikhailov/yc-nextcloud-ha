@@ -1,0 +1,21 @@
+ upstream backend {
+    {% for server in backend_servers %}
+    server {{ server }};
+    {% endfor %}
+}
+
+ server {
+    listen 443 ssl;
+    server_name {{ domain_name }};
+    
+    ssl_certificate /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ domain_name }}/privkey.pem;
+
+    try_files $uri $uri/;
+
+    location / {
+        proxy_pass http://backend;
+        proxy_set_header X-Real-ip $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}

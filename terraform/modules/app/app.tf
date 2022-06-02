@@ -5,8 +5,8 @@ resource "yandex_compute_instance" "app" {
   zone        = var.yc_zone
 
   resources {
-    cores  = 2
-    memory = 4
+    cores  = 4
+    memory = 8
   }
 
   boot_disk {
