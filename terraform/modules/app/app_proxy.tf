@@ -18,7 +18,6 @@ resource "yandex_compute_instance" "app_proxy" {
 
   network_interface {
     subnet_id = yandex_vpc_subnet.app-subnet-1.id
-    nat       = true
   }
 
   metadata = {

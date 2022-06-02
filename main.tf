@@ -1,4 +1,6 @@
-resource "yandex_vpc_network" "nextloud-net" {}
+resource "yandex_vpc_network" "nextloud-net" {
+  name = "nextcloud-network"
+}
 
 module "bastion" {
   source = "./terraform/modules/bastion"
@@ -12,12 +14,13 @@ module "bastion" {
 module "yc-instance" {
   source = "./terraform/modules/app"
 
-  yc_zone    = "ru-central1-a"
-  ssh_pub    = var.ssh_pub
-  ssh_key    = var.ssh_key
-  dns_zone   = "somikhailov-fun"
-  vpc-id     = yandex_vpc_network.nextloud-net.id
-  bastion_ip = module.bastion.bastion_ip
+  yc_zone       = "ru-central1-a"
+  ssh_pub       = var.ssh_pub
+  ssh_key       = var.ssh_key
+  dns_zone      = "somikhailov-fun"
+  vpc-id        = yandex_vpc_network.nextloud-net.id
+  bastion_ip    = module.bastion.bastion_ip
+  bastion_rt_id = module.bastion.rt_id
 }
 
 module "ansible_provision" {

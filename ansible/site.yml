@@ -7,11 +7,11 @@
     - nginx
   tags: nginx
 
-- name: Nextcloud
-  hosts: app
-  become: true
-  vars:
-    domain_name: nextcloud.somikhailov.fun
-  roles:
-    - nextcloud
-  tags: nextcloud
+# - name: Nextcloud
+#   hosts: app
+#   become: true
+#   vars:
+#     domain_name: nextcloud.somikhailov.fun
+#   roles:
+#     - nextcloud
+#   tags: nextcloud

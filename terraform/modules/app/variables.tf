@@ -21,3 +21,7 @@ variable "vpc-id" {
 variable "bastion_ip" {
   type = string
 }
+
+variable "bastion_rt_id" {
+  type = string
+}
