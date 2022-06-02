@@ -7,5 +7,5 @@ resource "yandex_dns_recordset" "nextcloud" {
   name    = "nextcloud"
   type    = "A"
   ttl     = 200
-  data    = [yandex_compute_instance.app[0].network_interface.0.nat_ip_address]
+  data    = [one(one(yandex_lb_network_load_balancer.app_lb.listener[*]).external_address_spec).address]
 }

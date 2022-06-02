@@ -13,5 +13,5 @@ output "app_proxy_name_ip" {
 }
 
 output "external_lb_ip" {
-  value = yandex_lb_network_load_balancer.app_lb.listener[*].external_address_spec.*.address
+  value = one(one(yandex_lb_network_load_balancer.app_lb.listener[*]).external_address_spec).address
 }
