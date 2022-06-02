@@ -26,12 +26,12 @@ resource "yandex_lb_target_group" "app_proxy_group" {
   name = "app-proxy-group"
 
   target {
-    subnet_id = yandex_vpc_subnet.subnet-1.id
+    subnet_id = yandex_vpc_subnet.app-subnet-1.id
     address   = yandex_compute_instance.app_proxy[0].network_interface.0.ip_address
   }
 
   target {
-    subnet_id = yandex_vpc_subnet.subnet-1.id
+    subnet_id = yandex_vpc_subnet.app-subnet-1.id
     address   = yandex_compute_instance.app_proxy[1].network_interface.0.ip_address
   }
 }

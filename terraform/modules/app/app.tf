@@ -1,5 +1,5 @@
 resource "yandex_compute_instance" "app" {
-  count       = var.app_count
+  count       = 1
   name        = "app-${count.index}"
   platform_id = "standard-v1"
   zone        = var.yc_zone
@@ -11,12 +11,13 @@ resource "yandex_compute_instance" "app" {
 
   boot_disk {
     initialize_params {
+      # docker host
       image_id = "fd80o2eikcn22b229tsa"
     }
   }
 
   network_interface {
-    subnet_id = yandex_vpc_subnet.subnet-1.id
+    subnet_id = yandex_vpc_subnet.app-subnet-1.id
     nat       = true
   }
 
@@ -25,11 +26,12 @@ resource "yandex_compute_instance" "app" {
   }
 
   connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    agent       = false
-    private_key = file(var.ssh_key)
-    host        = self.network_interface.0.nat_ip_address
+    type         = "ssh"
+    user         = "ubuntu"
+    agent        = false
+    private_key  = file(var.ssh_key)
+    host         = self.network_interface.0.ip_address
+    bastion_host = var.bastion_ip
   }
 
   provisioner "remote-exec" {

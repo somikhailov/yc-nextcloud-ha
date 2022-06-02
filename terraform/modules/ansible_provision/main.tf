@@ -3,6 +3,7 @@ resource "local_file" "AnsibleInventory" {
     ansible_hosts = var.ansible_hosts
     user          = var.user
     ssh_key       = var.ssh_key
+    bastion_ip    = var.bastion_ip
     }
   )
   filename = var.ansible_inventory

@@ -12,6 +12,10 @@ variable "ansible_hosts" {
   }
 }
 
+variable "bastion_ip" {
+  type = string
+}
+
 variable "ansible_inventory_template" {
   description = "Path to ansible inventory template"
   type        = string

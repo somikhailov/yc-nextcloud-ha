@@ -4,6 +4,7 @@
   synchronize:
     src: letsencrypt
     dest: /etc/
+    use_ssh_args: yes
 
 - name: create dicrectories
   file:
