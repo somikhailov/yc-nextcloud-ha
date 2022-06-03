@@ -20,6 +20,9 @@ variable "domain_name" {
   type = string
 }
 
+variable "postgres_host" {
+  type = string
+}
 
 variable "ansible_inventory_template" {
   description = "Path to ansible inventory template"

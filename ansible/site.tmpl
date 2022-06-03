@@ -1,4 +1,12 @@
 ---
+- name: postgres
+  hosts: db
+  become: true
+
+  roles:
+    - postgres
+  tags: postgres
+
 - name: nginx
   hosts: app_proxy
   become: true
@@ -12,6 +20,8 @@
 - name: Nextcloud
   hosts: app
   become: true
+  vars:
+    postgres_host: ${ postgres_host }
 
   roles:
     - nextcloud

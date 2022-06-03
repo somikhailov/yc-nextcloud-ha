@@ -15,7 +15,6 @@
     mode: 0755
   loop:
     - nginx
-    - nginx/html
     - nginx/nginx.conf.d
 
 - name: copy configs

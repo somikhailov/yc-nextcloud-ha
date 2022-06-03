@@ -1,2 +1,3 @@
 ---
 # defaults file for ansible/roles/nginx_install
+postgres_host: db

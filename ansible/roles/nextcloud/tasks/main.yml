@@ -20,9 +20,9 @@
     mode: 0755
   loop:
     - {src: nginx.conf.d/nextcloud.conf.j2, dest: nextcloud/nginx.conf.d/nextcloud.conf}
-    - {src: docker-compose.yml, dest: nextcloud/docker-compose.yml}
-    - {src: db.env, dest: nextcloud/db.env}
+    - {src: docker-compose.yml.j2, dest: nextcloud/docker-compose.yml}
     - {src: nginx.conf, dest: nextcloud/nginx.conf}
+    - {src: db.env, dest: nextcloud/db.env}
 
 - name: start docker-compose
   shell: "docker-compose -f nextcloud/docker-compose.yml up -d"

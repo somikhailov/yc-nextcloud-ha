@@ -11,7 +11,8 @@ resource "local_file" "ansibleInventory" {
 
 resource "local_file" "ansiblePlaybook" {
   content = templatefile(var.ansible_playbook_template, {
-    domain_name = var.domain_name
+    domain_name   = var.domain_name
+    postgres_host = var.postgres_host
     }
   )
   filename = var.ansible_playbook

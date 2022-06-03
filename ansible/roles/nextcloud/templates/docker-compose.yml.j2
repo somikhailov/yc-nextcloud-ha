@@ -1,15 +1,6 @@
 version: '3'
 
 services:
-  db:
-    image: postgres:14-alpine
-    container_name: postgres
-    restart: unless-stopped
-    volumes:
-      - db:/var/lib/postgresql/data
-    env_file:
-      - db.env
-
   redis:
     image: redis:7.0-alpine
     container_name: redis
@@ -22,7 +13,7 @@ services:
     volumes:
       - nextcloud:/var/www/html
     environment:
-      - POSTGRES_HOST=db
+      - POSTGRES_HOST={{ postgres_host }}
       - REDIS_HOST=redis
     env_file:
       - db.env
@@ -45,5 +36,4 @@ services:
       - app
 
 volumes:
-  db:
   nextcloud:
