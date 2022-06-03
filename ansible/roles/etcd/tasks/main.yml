@@ -1,0 +1,25 @@
+---
+# tasks file for ansible/roles/nginx_install
+- name: create dicrectories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - etcd
+
+- name: copy configs
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - {src: docker-compose.yml, dest: etcd/docker-compose.yml}
+    - {src: etcd.conf.yml.j2, dest: etcd/etcd.conf.yml}
+
+- name: start docker-compose
+  shell: "docker-compose -f etcd/docker-compose.yml up -d"

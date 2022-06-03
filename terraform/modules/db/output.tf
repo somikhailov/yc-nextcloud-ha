@@ -5,6 +5,13 @@ output "db_name_ip" {
   }
 }
 
+output "etcd_name_ip" {
+  value = {
+    for etcd in yandex_compute_instance.etcd :
+    etcd.name => etcd.network_interface.0.ip_address
+  }
+}
+
 output "db_ip" {
   value = yandex_compute_instance.db.0.network_interface.0.ip_address
 }

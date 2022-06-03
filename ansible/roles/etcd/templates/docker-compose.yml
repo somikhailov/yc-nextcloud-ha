@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  etcd:
+    image: docker.io/bitnami/etcd:3.5
+    container_name: etcd
+    restart: unless-stopped
+    ports:
+      - 2379:2379
+      - 2380:2380
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+    volumes:
+      - etcd_data:/bitnami/etcd
+      - ./etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml
+
+volumes:
+  etcd_data:

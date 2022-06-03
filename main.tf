@@ -45,6 +45,7 @@ module "ansible_provision" {
     app_proxy = module.app.app_proxy_name_ip
     app       = module.app.app_name_ip
     db        = module.db.db_name_ip
+    etcd      = module.db.etcd_name_ip
   }
   bastion_ip    = module.bastion.bastion_ip
   domain_name   = module.app.domain_name

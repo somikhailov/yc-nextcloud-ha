@@ -1,4 +1,12 @@
 ---
+- name: etcd
+  hosts: etcd
+  become: true
+
+  roles:
+    - etcd
+  tags: etcd
+
 - name: postgres
   hosts: db
   become: true
