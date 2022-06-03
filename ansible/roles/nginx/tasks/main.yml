@@ -27,7 +27,6 @@
     mode: 0755
   loop:
     - {src: docker-compose.yml, dest: nginx/docker-compose.yml}
-    - {src: html/index.html.j2, dest: nginx/html/index.html}
     - {src: nginx.conf.d/certbot.conf.j2, dest: nginx/nginx.conf.d/certbot.conf}
     - {src: nginx.conf.d/proxy.conf.j2, dest: nginx/nginx.conf.d/proxy.conf}
 

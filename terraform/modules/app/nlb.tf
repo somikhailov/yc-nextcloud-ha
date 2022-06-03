@@ -2,8 +2,8 @@ resource "yandex_lb_network_load_balancer" "app_lb" {
   name = "app-lb"
 
   listener {
-    name = "https-listener"
-    port = 443
+    name     = "https-listener"
+    port     = 443
     protocol = "tcp"
     external_address_spec {
       ip_version = "ipv4"
@@ -11,8 +11,8 @@ resource "yandex_lb_network_load_balancer" "app_lb" {
   }
 
   listener {
-    name = "http-listener"
-    port = 80
+    name     = "http-listener"
+    port     = 80
     protocol = "tcp"
     external_address_spec {
       ip_version = "ipv4"

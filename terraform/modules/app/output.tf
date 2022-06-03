@@ -15,3 +15,7 @@ output "app_proxy_name_ip" {
 output "external_lb_ip" {
   value = one(one(tolist(yandex_lb_network_load_balancer.app_lb.listener)[0][*]).external_address_spec).address
 }
+
+output "domain_name" {
+  value = trimsuffix("${yandex_dns_recordset.nextcloud.name}.${data.yandex_dns_zone.zone.zone}", ".")
+}

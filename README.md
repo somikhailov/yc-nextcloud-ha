@@ -14,7 +14,7 @@ This project contains code for creating `docker` host in `yandex cloud` with `te
 
 copy example and set your variables
 ```
-cp terraform.tfvars.example terraform.tfvars
+cp terraform.private.tfvars.example terraform.private.tfvars
 ```
 
 copy letsencrypt cert

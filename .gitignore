@@ -1,7 +1,7 @@
 *.tfstate
 *.tfstate.*.backup
 *.tfstate.backup
-*.tfvars
+terraform.private.tfvars
 backend.tf
 .terraform/
 .terraform.lock.hcl
@@ -14,7 +14,8 @@ letsencrypt
 *.KEY
 *.pem
 *output.txt
-inventory.yaml
+inventory.yml
+site.yml
 ansible.cfg
 ssh.cfg
 *.tmp

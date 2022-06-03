@@ -1,5 +1,0 @@
-yc_token     = "<your-token>"
-yc_cloud_id  = "<your-cloud-id>"
-yc_folder_id = "your-folder-id"
-ssh_pub      = "~/.ssh/id_rsa.pub"
-ssh_key      = "~/.ssh/id_rsa"

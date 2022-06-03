@@ -1,4 +1,4 @@
-resource "local_file" "AnsibleInventory" {
+resource "local_file" "ansibleInventory" {
   content = templatefile(var.ansible_inventory_template, {
     ansible_hosts = var.ansible_hosts
     user          = var.user
@@ -7,6 +7,14 @@ resource "local_file" "AnsibleInventory" {
     }
   )
   filename = var.ansible_inventory
+}
+
+resource "local_file" "ansiblePlaybook" {
+  content = templatefile(var.ansible_playbook_template, {
+    domain_name = var.domain_name
+    }
+  )
+  filename = var.ansible_playbook
 }
 
 resource "null_resource" "ansible" {
@@ -19,6 +27,7 @@ resource "null_resource" "ansible" {
   }
 
   depends_on = [
-    local_file.AnsibleInventory,
+    local_file.ansibleInventory,
+    local_file.ansiblePlaybook,
   ]
 }
