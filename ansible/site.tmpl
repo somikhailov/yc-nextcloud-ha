@@ -26,12 +26,11 @@
     - nginx
   tags: nginx
 
-# - name: Nextcloud
-#   hosts: app
-#   become: true
-#   vars:
-#     postgres_host: ${ postgres_host }
-
-#   roles:
-#     - nextcloud
-#   tags: nextcloud
+- name: Nextcloud
+  hosts: app
+  become: true
+  vars:
+    backend_servers: "{{ groups['db'] | map('extract', hostvars, ['ansible_host']) }}"   
+  roles:
+    - nextcloud
+  tags: nextcloud

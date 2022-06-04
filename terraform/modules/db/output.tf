@@ -11,7 +11,3 @@ output "etcd_name_ip" {
     etcd.name => etcd.network_interface.0.ip_address
   }
 }
-
-output "db_ip" {
-  value = yandex_compute_instance.db.0.network_interface.0.ip_address
-}

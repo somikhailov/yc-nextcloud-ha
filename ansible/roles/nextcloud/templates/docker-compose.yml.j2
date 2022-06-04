@@ -1,10 +1,19 @@
 version: '3'
 
 services:
+  haproxy:
+    image: haproxy:2.6-alpine
+    container_name: haproxy
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+
   redis:
     image: redis:7.0-alpine
     container_name: redis
-    restart: always
+    restart: unless-stopped
 
   app:
     image: nextcloud:24-fpm-alpine
@@ -13,12 +22,10 @@ services:
     volumes:
       - nextcloud:/var/www/html
     environment:
-      - POSTGRES_HOST={{ postgres_host }}
+      - POSTGRES_HOST=haproxy
       - REDIS_HOST=redis
-    env_file:
-      - db.env
     depends_on:
-      - db
+      - haproxy
       - redis
 
   web:

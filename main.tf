@@ -49,7 +49,6 @@ module "ansible_provision" {
   }
   bastion_ip    = module.bastion.bastion_ip
   domain_name   = module.app.domain_name
-  postgres_host = module.db.db_ip
   ssh_key       = var.ssh_key
   user          = "ubuntu"
 }

@@ -43,13 +43,7 @@ bootstrap:
   - host replication replicator {{ hostvars[host]['ansible_host'] }}/24 md5
   {% endfor %}
 
-  - host all root 0.0.0.0/0 md5
-  users:
-    admin:
-      password: password
-      options:
-      - createrole
-      - createdb
+  - host all all 0.0.0.0/0 md5
 postgresql:
   listen: {{ ansible_host }}:5432 
   connect_address: {{ ansible_host }}:5432 
