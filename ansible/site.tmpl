@@ -7,13 +7,14 @@
     - etcd
   tags: etcd
 
-- name: postgres
+- name: patroni
   hosts: db
   become: true
-
+  vars:
+    etcd_servers: "{{ groups['etcd'] | map('extract', hostvars, ['ansible_host']) | join(':2379,') }}:2379"
   roles:
-    - postgres
-  tags: postgres
+    - patroni
+  tags: patroni
 
 - name: nginx
   hosts: app_proxy
@@ -25,12 +26,12 @@
     - nginx
   tags: nginx
 
-- name: Nextcloud
-  hosts: app
-  become: true
-  vars:
-    postgres_host: ${ postgres_host }
+# - name: Nextcloud
+#   hosts: app
+#   become: true
+#   vars:
+#     postgres_host: ${ postgres_host }
 
-  roles:
-    - nextcloud
-  tags: nextcloud
+#   roles:
+#     - nextcloud
+#   tags: nextcloud

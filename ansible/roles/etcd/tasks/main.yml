@@ -18,8 +18,7 @@
     group: root
     mode: 0755
   loop:
-    - {src: docker-compose.yml, dest: etcd/docker-compose.yml}
-    - {src: etcd.conf.yml.j2, dest: etcd/etcd.conf.yml}
+    - {src: docker-compose.yml.j2, dest: etcd/docker-compose.yml}
 
 - name: start docker-compose
   shell: "docker-compose -f etcd/docker-compose.yml up -d"

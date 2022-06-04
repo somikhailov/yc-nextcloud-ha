@@ -1,0 +1,75 @@
+scope: {{ patroni_scope_name }}
+namespace: /{{ patroni_namespace_name }}/
+name: {{ inventory_hostname }} 
+
+restapi:
+  listen: {{ ansible_host }}:8008
+  connect_address: {{ ansible_host }}:8008
+
+etcd3:
+  hosts: {{ etcd_servers }}
+
+# this section (bootstrap) will be written into Etcd:/<namespace>/<scope>/config after initializing new cluster
+# and all other cluster members will use it as a `global configuration`
+bootstrap:
+  dcs:
+    ttl: 30
+    loop_wait: 10
+    retry_timeout: 10
+    maximum_lag_on_failover: 1048576
+    postgresql:
+      use_pg_rewind: true
+      use_slots: true
+      parameters:
+      wal_level: replica 
+      hot_standby: "on" 
+      max_wal_senders: 5 
+      max_replication_slots: 5 
+      wal_log_hints: "on" 
+      archive_mode: "on" 
+      archive_timeout: 600s
+      archive_command: "cp -f %p /db/pg_archived/%f"
+      recovery_conf:
+        restore_command: "cp -f /db/pg_archived/%f %p"
+  initdb:
+  - encoding: UTF8
+  - data-checksums
+  - locale: en_US.UTF8
+  pg_hba:
+  - host replication replicator ::1/128 md5
+  - host replication replicator 127.0.0.1/8 md5
+  {% for host in groups[group_names[0]] %}
+  
+  - host replication replicator {{ hostvars[host]['ansible_host'] }}/24 md5
+  {% endfor %}
+
+  - host all root 0.0.0.0/0 md5
+  users:
+    admin:
+      password: password
+      options:
+      - createrole
+      - createdb
+postgresql:
+  listen: {{ ansible_host }}:5432 
+  connect_address: {{ ansible_host }}:5432 
+  data_dir: /etc/patroni/pgdata 
+  bin_dir:  /usr/lib/postgresql/13/bin
+  pgpass: /tmp/pgpass0
+  authentication:
+    replication:
+      username: replicator
+      password: password
+    superuser:
+      username: root
+      password: password
+  create_replica_methods:
+    basebackup:
+      checkpoint: 'fast'
+  parameters:
+    unix_socket_directories: '/var/run/postgresql'
+    external_pid_file: '/var/run/postgresql/13-main.pid'
+  synchronous_mode: "on"
+  logging_collector: "on" 
+  log_directory: "/var/log/postgresql"
+  log_filename: "postgresql-13-main.log"

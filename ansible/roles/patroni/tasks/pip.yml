@@ -1,0 +1,5 @@
+- name: Install pip packages
+  pip:
+    name: "{{ item }}"
+  loop:
+    - patroni[etcd]==2.1.4

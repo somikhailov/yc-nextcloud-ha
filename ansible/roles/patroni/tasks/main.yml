@@ -1,0 +1,7 @@
+---
+# tasks file for ansible/roles/patroni
+- include_tasks: "{{ ansible_distribution }}.yml"
+
+- include_tasks: pip.yml
+
+- include_tasks: config.yml

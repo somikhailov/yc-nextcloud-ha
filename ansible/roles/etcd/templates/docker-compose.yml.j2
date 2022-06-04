@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  etcd:
+    image: docker.io/bitnami/etcd:3.5
+    container_name: etcd
+    restart: unless-stopped
+    ports:
+      - 2379:2379
+      - 2380:2380
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_NAME={{ inventory_hostname }}
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://{{ ansible_host }}:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://{{ ansible_host }}:2379
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
+      - ETCD_INITIAL_CLUSTER_STATE=new
+      - ETCD_INITIAL_CLUSTER={% for host in groups[group_names[0]] %}{{ hostvars[host]['inventory_hostname'] }}=http://{{ hostvars[host]['ansible_host'] }}:2380{% if not loop.last %},{% endif %}{% endfor %}
+
+    volumes:
+      - etcd_data:/bitnami/etcd
+
+volumes:
+  etcd_data:

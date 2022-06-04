@@ -1,18 +1,18 @@
 resource "yandex_compute_instance" "db" {
-  count       = 1
+  count       = 3
   name        = "db-${count.index}"
   platform_id = "standard-v1"
   zone        = var.yc_zone
 
   resources {
-    cores  = 4
-    memory = 8
+    cores  = 2
+    memory = 4
   }
 
   boot_disk {
     initialize_params {
-      # docker host
-      image_id = "fd80o2eikcn22b229tsa"
+      # ubuntu host
+      image_id = "fd8ciuqfa001h8s9sa7i"
     }
   }
 
