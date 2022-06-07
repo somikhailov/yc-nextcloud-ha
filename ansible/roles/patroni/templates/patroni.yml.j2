@@ -52,11 +52,11 @@ postgresql:
   pgpass: /tmp/pgpass0
   authentication:
     replication:
-      username: replicator
-      password: password
+      username: {{ replication_username }}
+      password: {{ replication_password }}
     superuser:
-      username: root
-      password: password
+      username: {{ superuser_username }}
+      password: {{ superuser_password }}
   create_replica_methods:
     basebackup:
       checkpoint: 'fast'

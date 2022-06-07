@@ -19,4 +19,4 @@ site.yml
 ansible.cfg
 ssh.cfg
 *.tmp
-*.ini
+inventory.ini

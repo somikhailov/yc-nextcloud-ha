@@ -4,3 +4,9 @@ patroni_scope_name: patroni
 patroni_namespace_name: service
 
 etcd_servers: "{{ groups['etcd'] | map('extract', hostvars, ['ansible_host']) | join(':2379,') }}:2379"
+
+superuser_username: root
+superuser_password: password
+
+replication_username: replicator
+replication_password: password

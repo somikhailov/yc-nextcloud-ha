@@ -47,8 +47,14 @@ module "ansible_provision" {
     db        = module.db.db_name_ip
     etcd      = module.db.etcd_name_ip
   }
-  bastion_ip    = module.bastion.bastion_ip
-  domain_name   = module.app.domain_name
-  ssh_key       = var.ssh_key
-  user          = "ubuntu"
+  bastion_ip                   = module.bastion.bastion_ip
+  domain_name                  = module.app.domain_name
+  patroni_superuser_username   = var.patroni_superuser_username
+  patroni_superuser_password   = var.patroni_superuser_password
+  patroni_replication_username = var.patroni_replication_username
+  patroni_replication_password = var.patroni_replication_password
+  nextcloud_admin_username     = var.nextcloud_admin_username
+  nextcloud_admin_password     = var.nextcloud_admin_password
+  ssh_key                      = var.ssh_key
+  user                         = "ubuntu"
 }

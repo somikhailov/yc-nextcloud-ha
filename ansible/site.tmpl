@@ -12,6 +12,10 @@
   become: true
   vars:
     etcd_servers: "{{ groups['etcd'] | map('extract', hostvars, ['ansible_host']) | join(':2379,') }}:2379"
+    superuser_username: ${ patroni_superuser_username }
+    superuser_password: ${ patroni_superuser_password }
+    replication_username: ${ patroni_replication_username }
+    replication_password: ${ patroni_replication_password }
   roles:
     - patroni
   tags: patroni
@@ -30,7 +34,12 @@
   hosts: app
   become: true
   vars:
-    backend_servers: "{{ groups['db'] | map('extract', hostvars, ['ansible_host']) }}"   
+    domain_name: ${ domain_name }
+    backend_servers: "{{ groups['db'] | map('extract', hostvars, ['ansible_host']) }}"
+    patroni_superuser_username: "${ patroni_superuser_username }"
+    patroni_superuser_password: "${ patroni_superuser_password }"
+    nextcloud_admin_username: "${ nextcloud_admin_username }"
+    nextcloud_admin_password: "${ nextcloud_admin_password }"
   roles:
     - nextcloud
   tags: nextcloud

@@ -49,3 +49,27 @@ variable "user" {
   description = "user for connection to instances with ssh public key"
   type        = string
 }
+
+variable "patroni_superuser_username" {
+  type = string
+}
+
+variable "patroni_superuser_password" {
+  type = string
+}
+
+variable "patroni_replication_username" {
+  type = string
+}
+
+variable "patroni_replication_password" {
+  type = string
+}
+
+variable "nextcloud_admin_username" {
+  type = string
+}
+
+variable "nextcloud_admin_password" {
+  type = string
+}
