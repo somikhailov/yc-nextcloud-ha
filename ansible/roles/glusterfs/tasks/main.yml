@@ -1,0 +1,37 @@
+---
+# tasks file for ansible/roles/patroni
+- include_tasks: "{{ ansible_distribution }}.yml"
+
+- name: Create a directoris for GlusterFS
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0775
+  loop:
+    - "{{ app_directory }}"
+    - "{{ gluster_brick_dir }}"
+
+- name: start glusterfs service
+  systemd:
+    name: glusterd
+    state: started
+    enabled: yes
+
+- name: Configure Gluster volume.
+  gluster_volume:
+    state: present
+    name: "{{ gluster_brick_name }}"
+    brick: "{{ gluster_brick_dir }}"
+    replicas: 3
+    cluster: "{{ groups[group_names[0]] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
+    host: "{{ ansible_host }}"
+    force: yes
+  run_once: true
+
+- name: Ensure Gluster volume is mounted.
+  mount:
+    name: "{{ app_directory }}"
+    src: "{{ ansible_host }}:/{{ gluster_brick_name }}"
+    fstype: glusterfs
+    opts: "defaults,_netdev"
+    state: mounted

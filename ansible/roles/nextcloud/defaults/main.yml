@@ -3,5 +3,6 @@
 postgres_host: db
 patroni_superuser_username: root
 patroni_superuser_password: password
-nextcloud_admin_username: admin
-nextcloud_admin_password: admin
+docker_compose_directory: nextcloud
+nextcloud_data_directory: /nextcloud_data
+nextcloud_config_directory: /nextcloud_config

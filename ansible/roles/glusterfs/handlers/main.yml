@@ -1,0 +1,8 @@
+---
+# handlers file for ansible/roles/patroni
+- name: restart glusterd.service
+  systemd:
+    name: glusterd
+    state: restarted
+    enabled: yes
+    daemon_reload: yes

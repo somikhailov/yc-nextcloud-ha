@@ -30,12 +30,36 @@
     - nginx
   tags: nginx
 
+- name: glusterfs nextcloud data
+  hosts: app
+  become: true
+  vars:
+    app_directory: /nextcloud_data
+    gluster_brick_dir: /srv/gluster/brick1
+    gluster_brick_name: nextcloud_data
+  roles:
+    - glusterfs
+  tags: glusterfs
+
+- name: glusterfs nextcloud config
+  hosts: app
+  become: true
+  vars:
+    app_directory: /nextcloud_config
+    gluster_brick_dir: /srv/gluster/brick2
+    gluster_brick_name: nextcloud_config
+  roles:
+    - glusterfs
+  tags: glusterfs
+
 - name: Nextcloud
   hosts: app
   become: true
   vars:
     domain_name: ${ domain_name }
     backend_servers: "{{ groups['db'] | map('extract', hostvars, ['ansible_host']) }}"
+    nextcloud_data_directory: /nextcloud_data
+    nextcloud_config_directory: /nextcloud_config
     patroni_superuser_username: "${ patroni_superuser_username }"
     patroni_superuser_password: "${ patroni_superuser_password }"
     nextcloud_admin_username: "${ nextcloud_admin_username }"
