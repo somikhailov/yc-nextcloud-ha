@@ -19,3 +19,10 @@ listen patroni
     {% for server in backend_servers %}
     server pg_{{ server }} {{ server }}:5432 maxconn 100 check port 8008
     {% endfor %}
+
+listen redis
+    bind *:6379
+    option tcp-check
+    default-server inter 3s fall 3 rise 2 on-marked-down shutdown-sessions
+    
+    server redis_{{ redis_host }} {{ redis_host }}:6379 maxconn 100
