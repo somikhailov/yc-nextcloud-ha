@@ -23,6 +23,14 @@ listen patroni
 listen redis
     bind *:6379
     option tcp-check
-    default-server inter 3s fall 3 rise 2 on-marked-down shutdown-sessions
-    
-    server redis_{{ redis_host }} {{ redis_host }}:6379 maxconn 100
+    tcp-check connect
+    tcp-check send PING\r\n
+    tcp-check expect string +PONG
+    tcp-check send info\ replication\r\n
+    tcp-check expect string role:master
+    tcp-check send QUIT\r\n
+    tcp-check expect string +OK
+
+    {% for server in groups[group_names[0]] | map('extract', hostvars, ['ansible_host']) %}  
+    server redis_{{ server }} {{ server}}:6379 check inter 3s
+    {% endfor %}

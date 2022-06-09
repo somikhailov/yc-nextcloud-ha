@@ -53,7 +53,7 @@
   tags: glusterfs
 
 - name: redis
-  hosts: app-0
+  hosts: app
   become: true   
   roles:
     - redis
@@ -71,7 +71,6 @@
     patroni_superuser_password: "${ patroni_superuser_password }"
     nextcloud_admin_username: "${ nextcloud_admin_username }"
     nextcloud_admin_password: "${ nextcloud_admin_password }"
-    redis_host: "{{ hostvars[groups['app'][0]]['ansible_eth0']['ipv4']['address'] }}"
   roles:
     - nextcloud
   tags: nextcloud

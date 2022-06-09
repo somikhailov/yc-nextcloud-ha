@@ -9,8 +9,7 @@ services:
       - 6379:6379
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-      - REDIS_MASTER_HOST="{{ hostvars[groups[group_names[0]][0]]['ansible_eth0']['ipv4']['address'] }}"
-      - REDIS_REPLICATION_MODE=slave
+      - REDIS_REPLICATION_MODE=master
     networks:
       - app-tier
   redis-sentinel:
