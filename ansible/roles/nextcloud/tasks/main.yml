@@ -23,9 +23,15 @@
     - {src: nginx/nginx.conf.d/nextcloud.conf.j2, dest: "{{ docker_compose_directory }}/nginx.conf.d/nextcloud.conf"}
     - {src: nginx/nginx.conf, dest: "{{ docker_compose_directory }}/nginx.conf"}
     - {src: haproxy/haproxy.cfg.j2, dest: "{{ docker_compose_directory }}/haproxy.cfg"}
-    - {src: docker-compose.yml.j2, dest: "{{ docker_compose_directory }}/docker-compose.yml"}
+    - {src: docker-compose.nextcloud.main.yml.j2, dest: "{{ docker_compose_directory }}/docker-compose.nextcloud.main.yml"}
+    - {src: docker-compose.nextcloud.yml.j2, dest: "{{ docker_compose_directory }}/docker-compose.nextcloud.yml"}
+    - {src: nextcloud.main.env.j2, dest: "{{ docker_compose_directory }}/nextcloud.main.env"}
     - {src: nextcloud.env.j2, dest: "{{ docker_compose_directory }}/nextcloud.env"}
 
-- name: start docker-compose
-  shell: "docker-compose -f {{ docker_compose_directory }}/docker-compose.yml up -d"
+- name: start docker-compose on main
+  shell: "docker-compose -f {{ docker_compose_directory }}/docker-compose.nextcloud.main.yml up -d"
   when: inventory_hostname == ansible_play_hosts[0]
+
+- name: start docker-compose
+  shell: "docker-compose -f {{ docker_compose_directory }}/docker-compose.nextcloud.yml up -d"
+  when: inventory_hostname != ansible_play_hosts[0]

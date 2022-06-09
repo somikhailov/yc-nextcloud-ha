@@ -1,3 +1,3 @@
 ---
 # defaults file for ansible/roles/nginx_install
-docker_compose_directory: etcd
+docker_compose_directory: redis

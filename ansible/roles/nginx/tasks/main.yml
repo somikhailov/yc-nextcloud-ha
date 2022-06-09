@@ -14,8 +14,8 @@
     group: root
     mode: 0755
   loop:
-    - nginx
-    - nginx/nginx.conf.d
+    - "{{ docker_compose_directory }}"
+    - "{{ docker_compose_directory }}/nginx.conf.d"
 
 - name: copy configs
   template:
@@ -25,9 +25,9 @@
     group: root
     mode: 0755
   loop:
-    - {src: docker-compose.yml, dest: nginx/docker-compose.yml}
-    - {src: nginx.conf.d/certbot.conf.j2, dest: nginx/nginx.conf.d/certbot.conf}
-    - {src: nginx.conf.d/proxy.conf.j2, dest: nginx/nginx.conf.d/proxy.conf}
+    - {src: docker-compose.yml, dest: "{{ docker_compose_directory }}/docker-compose.yml"}
+    - {src: nginx.conf.d/certbot.conf.j2, dest: "{{ docker_compose_directory }}/nginx.conf.d/certbot.conf"}
+    - {src: nginx.conf.d/proxy.conf.j2, dest: "{{ docker_compose_directory }}/nginx.conf.d/proxy.conf"}
 
 - name: start docker-compose
   shell: "docker-compose -f nginx/docker-compose.yml up -d"

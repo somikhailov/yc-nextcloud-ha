@@ -9,7 +9,6 @@ services:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     networks:
       - app_subnet
-
   app:
     image: nextcloud:24-fpm-alpine
     container_name: nextcloud
@@ -21,7 +20,7 @@ services:
     networks:
       - app_subnet
     env_file:
-      - nextcloud.env
+      - nextcloud.main.env
     depends_on:
       - haproxy
 
@@ -43,7 +42,6 @@ services:
 
 volumes:
   nextcloud:
-  redis-cluster_data:
 
 networks:
   app_subnet:
