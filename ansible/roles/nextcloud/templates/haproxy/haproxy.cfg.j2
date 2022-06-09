@@ -16,7 +16,7 @@ listen patroni
     http-check expect status 200
     default-server inter 3s fall 3 rise 2 on-marked-down shutdown-sessions
     
-    {% for server in backend_servers %}
+    {% for server in patroni_servers %}
     server pg_{{ server }} {{ server }}:5432 maxconn 100 check port 8008
     {% endfor %}
 
@@ -31,6 +31,6 @@ listen redis
     tcp-check send QUIT\r\n
     tcp-check expect string +OK
 
-    {% for server in groups[group_names[0]] | map('extract', hostvars, ['ansible_host']) %}  
+    {% for server in redis_servers %}  
     server redis_{{ server }} {{ server}}:6379 check inter 3s
     {% endfor %}

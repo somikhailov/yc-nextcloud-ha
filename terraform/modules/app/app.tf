@@ -1,5 +1,5 @@
 resource "yandex_compute_instance" "app" {
-  count       = 3
+  count       = 2
   name        = "app-${count.index}"
   platform_id = "standard-v1"
   zone        = var.yc_zone

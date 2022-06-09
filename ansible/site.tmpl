@@ -37,6 +37,7 @@
     app_directory: /nextcloud_data
     gluster_brick_dir: /srv/gluster/brick1
     gluster_brick_name: nextcloud_data
+    replicas: 2
   roles:
     - glusterfs
   tags: glusterfs
@@ -48,12 +49,13 @@
     app_directory: /nextcloud_config
     gluster_brick_dir: /srv/gluster/brick2
     gluster_brick_name: nextcloud_config
+    replicas: 2
   roles:
     - glusterfs
   tags: glusterfs
 
 - name: redis
-  hosts: app
+  hosts: etcd
   become: true   
   roles:
     - redis
@@ -64,7 +66,8 @@
   become: true
   vars:
     domain_name: ${ domain_name }
-    backend_servers: "{{ groups['db'] | map('extract', hostvars, ['ansible_host']) }}"
+    patroni_servers: "{{ groups['db'] | map('extract', hostvars, ['ansible_host']) }}"
+    redis_servers: "{{ groups['etcd'] | map('extract', hostvars, ['ansible_host']) }}"
     nextcloud_data_directory: /nextcloud_data
     nextcloud_config_directory: /nextcloud_config
     patroni_superuser_username: "${ patroni_superuser_username }"

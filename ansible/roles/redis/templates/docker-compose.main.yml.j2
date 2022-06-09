@@ -5,22 +5,21 @@ services:
     image: bitnami/redis:7.0
     container_name: redis
     restart: unless-stopped
-    ports:
-      - 6379:6379
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_REPLICATION_MODE=master
-    networks:
-      - app-tier
+      - REDIS_REPLICA_IP={{ ansible_host }}
+    volumes:
+      - redis_data:/bitnami/redis/data
+    network_mode: host
   redis-sentinel:
     image: bitnami/redis-sentinel:7.0
+    container_name: redis-sentinel
     environment:
-      - REDIS_MASTER_HOST="{{ hostvars[groups[group_names[0]][0]]['ansible_eth0']['ipv4']['address'] }}"
-    ports:
-      - '26379:26379'
-    networks:
-      - app-tier
+      - REDIS_MASTER_HOST={{ hostvars[groups[group_names[0]][0]]['ansible_host'] }}
+      - REDIS_SENTINEL_ANNOUNCE_IP={{ ansible_host }}
+    network_mode: host
 
-networks:
-  app-tier:
-    driver: bridge
+volumes:
+  redis_data:
+    driver: local

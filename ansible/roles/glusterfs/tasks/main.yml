@@ -22,7 +22,7 @@
     state: present
     name: "{{ gluster_brick_name }}"
     brick: "{{ gluster_brick_dir }}"
-    replicas: 3
+    replicas: "{{ replicas }}"
     cluster: "{{ groups[group_names[0]] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
     host: "{{ ansible_host }}"
     force: yes

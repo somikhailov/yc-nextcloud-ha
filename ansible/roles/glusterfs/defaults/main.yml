@@ -4,3 +4,5 @@
 app_directory: /var/lib/docker/volumes/nextcloud_nextcloud/_data/
 gluster_brick_dir: /srv/gluster/brick
 gluster_brick_name: app
+
+replicas: 2

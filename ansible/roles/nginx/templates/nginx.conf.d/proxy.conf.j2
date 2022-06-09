@@ -1,4 +1,6 @@
  upstream backend {
+    ip_hash;
+
     {% for server in backend_servers %}
     server {{ server }};
     {% endfor %}
