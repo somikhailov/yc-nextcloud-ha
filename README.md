@@ -38,7 +38,7 @@ and set variables in `terraform.auto.tfvars`
 | yc_zone             | default zone for project in yandex cloud                        | ru-central1-a      |
 | yc_vpc_network_name | name new vpc-network for this project in yandex cloud           | nextcloud-network  |
 
-get letsencrypt certificate (for example from my project [yc-nginx-certbot](https://github.com/somikhailov/yc-nginx-certbot) ) and copy to `ansile/roles/nginx/files` for deploying with ansible
+get letsencrypt certificate (for example from this project [yc-nginx-certbot](https://github.com/somikhailov/yc-nginx-certbot) ) and copy to `ansile/roles/nginx/files` for deploying with ansible
 ```
 ./some/path ./ansible/roles/nginx/files
 ```
@@ -50,6 +50,13 @@ terraform get
 terraform plan
 terraform apply -auto-approve
 ```
+
+for running with remote backend stored in yandex cloud s3 bucket copy this `tf` file and set your private variables. 
+```
+cp backend.tf.example backend.tf
+```
+
+> for creating bucket you may uses this project [yc-s3-bucket](https://github.com/somikhailov/yc-s3-bucket)
 
 for destroying
 ```bash
